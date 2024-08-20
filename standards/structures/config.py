@@ -4,7 +4,7 @@ from ..exceptions import IncompatibleConfigVersion
 from ..__init__ import __config_version__
 from ..utils import Singleton
 
-class StandardConfig():
+class StandardConfig(BaseObject):
     _version: int
     
     @classmethod
