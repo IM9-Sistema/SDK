@@ -2,8 +2,9 @@ from json import load
 from .base import BaseObject
 from .exceptions import IncompatibleConfigVersion
 from ..__init__ import __config_version__
+from ..utils import Singleton
 
-class Config(BaseObject):
+class StandardConfig(BaseObject):
     _version: int
     
     @classmethod
@@ -15,5 +16,5 @@ class Config(BaseObject):
                 if v != __config_version__:
                     raise IncompatibleConfigVersion
         return cls(**data)
-    
-    
+
+class SingletonConfig(StandardConfig, Singleton): pass

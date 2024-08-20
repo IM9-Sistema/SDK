@@ -4,5 +4,5 @@ from .event import Event, EventType
 from .position import Position, PrimitivePosition
 from .generics import GenericReference, Primitive, IDReference, HostAddress, RabbitMQAddress
 from . import exceptions
-from .config import Config
+from .config import StandardConfig, SingletonConfig
 from .auth import PasswordUsername
