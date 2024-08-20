@@ -1,3 +1,5 @@
+from ..exceptions import NotInstancedException
+
 class SingletonMeta(type):
     _instances = {}
 
@@ -11,3 +13,4 @@ class Singleton(object, metaclass=SingletonMeta):
     def get(cls) -> 'Singleton'|None:
         if cls in cls._instances:
             return cls._instances[cls]
+        raise NotInstancedException()
