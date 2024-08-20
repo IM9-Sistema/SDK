@@ -1,6 +1,6 @@
 from json import load
 from .base import BaseObject
-from .exceptions import IncompatibleConfigVersion
+from ..exceptions import IncompatibleConfigVersion
 from ..__init__ import __config_version__
 from ..utils import Singleton
 
