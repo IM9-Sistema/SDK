@@ -1,0 +1,2 @@
+class StandardException(Exception):
+    pass

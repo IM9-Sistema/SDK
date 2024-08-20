@@ -3,3 +3,5 @@ from .equipament import Equipament, EquipamentEventType, EquipamentReference, Pr
 from .event import Event, EventType
 from .position import Position, PrimitivePosition
 from .generics import GenericReference, Primitive, IDReference 
+from . import exceptions
+from .config import Config

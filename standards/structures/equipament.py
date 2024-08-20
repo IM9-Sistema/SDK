@@ -1,6 +1,6 @@
 from enum import Enum, auto
 from .base import BaseObject
-from utils import reference_link
+from ..utils import reference_link
 from .generics import IDReference, Primitive
 
 

@@ -1,0 +1,1 @@
+from __init__ import __version__, __author__, __config_version__
