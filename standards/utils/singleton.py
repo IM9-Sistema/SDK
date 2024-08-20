@@ -10,7 +10,7 @@ class SingletonMeta(type):
 
 class Singleton(object, metaclass=SingletonMeta):
     @classmethod
-    def get(cls) -> 'Singleton'|None:
+    def get(cls):
         if cls in cls._instances:
             return cls._instances[cls]
         raise NotInstancedException()
