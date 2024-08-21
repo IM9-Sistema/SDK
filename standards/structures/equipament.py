@@ -26,6 +26,7 @@ class EquipamentEventType(Enum):
     ANTI_THEFT_DOOR = 106
     MOTION = 107
     ANTI_THEFT_SHOCK = 108
+    REGULAR_POSITION = 200
 
 class VehicleState(Enum):
     ON = auto()
