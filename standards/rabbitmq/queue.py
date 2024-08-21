@@ -7,7 +7,7 @@ class Queue:
 	def __init__(self, host, port, queue):
 		self.host = host
 		self.port = port
-		self.connection = pika.BlockingConnection(pika.ConnectionParameters(f'{host}:{port}'))
+		self.connection = pika.BlockingConnection(pika.ConnectionParameters(host, port))
 		self.channel = self.connection.channel()
 		self.channel.basic_qos(prefetch_count=1)
 		self.queue_name = queue
