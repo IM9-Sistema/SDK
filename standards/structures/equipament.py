@@ -31,4 +31,4 @@ class EquipamentEventType(Enum):
 class VehicleState(Enum):
     ON = auto()
     IDLE = auto()
-    
+    OFF = auto()
