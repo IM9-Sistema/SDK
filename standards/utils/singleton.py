@@ -15,7 +15,6 @@ class SingletonMeta(ModelMetaclass):
 class Singleton(metaclass=SingletonMeta):
     @classmethod
     def get(cls):
-        print(cls._instances, cls)
         if cls in cls._instances:
             return cls._instances[cls]
         raise NotInstancedException()
