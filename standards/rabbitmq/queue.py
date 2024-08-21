@@ -32,4 +32,4 @@ class Queue:
 								auto_ack=False,
 								on_message_callback=function)
 			self.channel.start_consuming()
-		return wrapper	
+		return wrapper
