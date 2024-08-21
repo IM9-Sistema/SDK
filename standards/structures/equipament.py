@@ -11,12 +11,12 @@ class PrimitiveEquipamentReference(IDReference): pass
 
 @reference_link(PrimitiveEquipamentReference, "id")
 class PrimitiveEquipament(Primitive):
-    id: int
+    uin: str
 
-@reference_link(EquipamentReference, "id")
+@reference_link(EquipamentReference, "uin")
 class Equipament(BaseObject):
     id: int
-    uin: int
+    uin: str
 
 class EquipamentEventType(Enum):
     PANIC_BUTTON = 101
