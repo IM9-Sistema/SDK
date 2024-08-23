@@ -1,29 +1,36 @@
 from typing import Callable
 import pika
 import pika.channel
+import pika.exceptions
 from pydantic import BaseModel
 
 class Queue:
 	def __init__(self, host, port, queue):
 		self.host = host
 		self.port = port
-		self.connection = pika.BlockingConnection(pika.ConnectionParameters(host, port))
+		self.queue_name = queue
+		self.connect()
+
+	def connect(self):
+		self.connection = pika.BlockingConnection(pika.ConnectionParameters(self.host, self.port))
 		self.channel = self.connection.channel()
 		self.channel.basic_qos(prefetch_count=1)
-		self.queue_name = queue
-		self.queue = self.channel.queue_declare(queue=queue)
-
+		self.queue = self.channel.queue_declare(queue=self.queue)
 
 
 	def produce_message(self, message: BaseModel):
-		self.channel.basic_publish(
-								exchange='',
-								routing_key=self.queue_name,
-								body=message.model_dump_json(),
-								properties=pika.BasicProperties(
-						 			delivery_mode = pika.DeliveryMode.Persistent
-					 				)
-								)
+		try:
+			self.channel.basic_publish(
+									exchange='',
+									routing_key=self.queue_name,
+									body=message.model_dump_json(),
+									properties=pika.BasicProperties(
+										delivery_mode = pika.DeliveryMode.Persistent
+										)
+									)
+		except pika.exceptions.StreamLostError:
+			self.connect()
+			return self.produce_message(message)
 
 	def consume_messages(self):
 		def wrapper(function: Callable[[pika.channel.Channel, pika.spec.Basic.Deliver, pika.spec.BasicProperties, bytes], None]) -> None:
