@@ -1,6 +1,10 @@
 from datetime import datetime
+
+from pydantic import Field
+
+from .trackable import Trackable
 from .base import BaseObject
-from .equipament import PrimitiveEquipament, Equipament, EquipamentEventType, VehicleState
+from .equipment import PrimitiveEquipment, Equipment, EquipmentEventType, VehicleState
 from .generics import Primitive
 
 class BatteryData(BaseObject):
@@ -15,17 +19,21 @@ class PrimitivePosition(Primitive):
     longitude: float
     speed: float|None
     distance: float|None
-    recieved_at: datetime
+    received_at: datetime
     generated_at: datetime
-    equipament: PrimitiveEquipament
+    equipment: PrimitiveEquipment
     battery: BatteryData|None
     is_stale: bool
     extras: ExtraInfo|None
     state: VehicleState
-    event: EquipamentEventType|None
+    event: EquipmentEventType | None
 
 
 class Position(BaseObject):
     latitude: float
     longitude: float
     address: str
+    received_at: datetime
+    generated_at: datetime
+    trackable: Trackable
+    battery: BatteryData = Field(default_factory=BatteryData)

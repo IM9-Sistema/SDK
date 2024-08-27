@@ -4,21 +4,25 @@ from ..utils import reference_link
 from .generics import IDReference, Primitive
 
 
-class EquipamentReference(IDReference): pass
+class EquipmentReference(IDReference): pass
 
-class PrimitiveEquipamentReference(IDReference): pass
+class PrimitiveEquipmentReference(IDReference): pass
 
+class Technology(BaseObject):
+    id: int
 
-@reference_link(PrimitiveEquipamentReference, "id")
-class PrimitiveEquipament(Primitive):
+@reference_link(PrimitiveEquipmentReference, "id")
+class PrimitiveEquipment(Primitive):
     uin: str
 
-@reference_link(EquipamentReference, "uin")
-class Equipament(BaseObject):
+@reference_link(EquipmentReference, "uin")
+class Equipment(BaseObject):
     id: int
     uin: str
+    technology: Technology
 
-class EquipamentEventType(Enum):
+
+class EquipmentEventType(Enum):
     SUNTECH_PANIC_BUTTON = 101
     SUNTECH_PARKING_LOCK = 102
     SUNTECH_MAIN_POWER_CUT = 103

@@ -3,7 +3,7 @@ from typing import Type
 from pydantic import BaseModel
 
 
-def reference_link(refclass: BaseModel, *fields: tuple[str]):
+def reference_link(refclass: Type[BaseModel], *fields: str):
     def get_reference(self):
         return refclass(**{k: v for k,v in self.model_dump().items() if k in fields})
 
