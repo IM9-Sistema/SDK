@@ -12,5 +12,13 @@ class HostAddress(BaseObject):
     host: str
     port: int
 
+class GenericConnectionPool(BaseObject):
+    min_size: int
+    max_size: int|None
+
+
 class RabbitMQAddress(HostAddress):
     queue: str
+
+class RabbitMQPool(RabbitMQAddress):
+    pool: GenericConnectionPool

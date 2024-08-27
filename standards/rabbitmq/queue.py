@@ -3,9 +3,13 @@ import pika
 import pika.channel
 import pika.exceptions
 from pydantic import BaseModel
+from ..structures.generics import RabbitMQAddress, RabbitMQPool
 
 class Queue:
 	def __init__(self, host, port, queue):
+		self.connection = None
+		self.channel = None
+		self.queue = None
 		self.host = host
 		self.port = port
 		self.queue_name = queue
@@ -16,6 +20,10 @@ class Queue:
 		self.channel = self.connection.channel()
 		self.channel.basic_qos(prefetch_count=1)
 		self.queue = self.channel.queue_declare(queue=self.queue)
+
+	@classmethod
+	def from_config(cls, config: RabbitMQAddress):
+		return cls(host=config.host, port=config.port, queue=config.queue)
 
 
 	def produce_message(self, message: BaseModel):
