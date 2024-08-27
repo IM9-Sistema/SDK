@@ -3,6 +3,8 @@ from .base import BaseObject
 from ..exceptions import IncompatibleConfigVersion
 from ..__init__ import __config_version__
 from ..utils import Singleton
+from .generics import HostAddress
+from .auth import PasswordUsername
 
 class StandardConfig(BaseObject):
     _version: int
@@ -18,3 +20,5 @@ class StandardConfig(BaseObject):
         return cls(**data)
 
 class SingletonConfig(StandardConfig, Singleton): pass
+
+class MSSQLConfig(PasswordUsername, HostAddress): pass
