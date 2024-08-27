@@ -6,4 +6,4 @@ from .generics import GenericReference, Primitive, IDReference, HostAddress, Rab
 from .config import StandardConfig, SingletonConfig, MSSQLConfig
 from .auth import PasswordUsername
 from .vehicle import VehicleReference, Vehicle
-from .trackable import Trackable, PrimitiveTrackable
+from .trackable import Trackable
