@@ -11,7 +11,7 @@ authors = [
 description = "Structure standards across projects"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ['pika', 'pydantic', 'pyodbc']
+dependencies = ['pika', 'pydantic', 'pyodbc', 'requests']
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
