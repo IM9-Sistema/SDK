@@ -39,16 +39,19 @@ class MSSQL:
     def get_cursor(self):
         return self.connection.cursor()
 
-    def select(self, sql: str, *data: tuple[Any], stream: bool = None) -> Generator[dict[str, Any], None, None]|list[dict[str, Any]]:
+    def stream_select(self, sql: str, *data: tuple[Any]) -> Generator[dict[str, Any], None, None]:
         cursor: pyodbc.Cursor = self.get_cursor()
         cursor.execute(sql, data)
 
+        columns: list[str] = [c[0].lower() for c in cursor.description]
+        while row := cursor.fetchone():
+            yield dict(zip(columns, row))
+        cursor.close()
+
+    def select(self, sql: str, *data: tuple[Any]) -> Generator[dict[str, Any], None, None]|list[dict[str, Any]]:
+        cursor: pyodbc.Cursor = self.get_cursor()
+        cursor.execute(sql, data)
 
         columns: list[str] = [c[0].lower() for c in cursor.description]
-        if stream:
-            while row := cursor.fetchone():
-                yield dict(zip(columns, row))
-        else:
-            return [dict(zip(columns, row)) for row in cursor.fetchall()]
-        cursor.close()
+        return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
