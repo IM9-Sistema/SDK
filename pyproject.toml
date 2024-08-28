@@ -4,14 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "standards"
-version = "1.0.0b21"
+version = "1.0.0b22"
 authors = [
   { name="IM9 Digital", email="joao_bernardi@outlook.com" },
 ]
 description = "Structure standards across projects"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ['pika', 'pydantic', 'pyodbc', 'requests']
+dependencies = ['pika', 'pydantic', 'pyodbc', 'requests', 'redis']
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

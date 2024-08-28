@@ -2,7 +2,7 @@ from json import load
 from .base import BaseObject
 from ..exceptions import IncompatibleConfigVersion
 from ..utils import Singleton
-from .generics import HostAddress
+from .generics import HostAddress, GenericConnectionPool
 from .auth import PasswordUsername
 __config_version__ = 0
 class StandardConfig(BaseObject):
@@ -21,3 +21,7 @@ class StandardConfig(BaseObject):
 class SingletonConfig(StandardConfig, Singleton): pass
 
 class MSSQLConfig(PasswordUsername, HostAddress): pass
+
+class RedisConfig(HostAddress):
+    database: int
+    pool: GenericConnectionPool|None
