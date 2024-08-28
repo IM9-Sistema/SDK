@@ -37,13 +37,13 @@ class Redis:
             value = value.model_dump_json().encode('utf-8')
         self.connection.set(key, value, ex=ttl)
 
-    def memo(self, identifier: str, ttl: int, casting):
+    def memo(self, identifier: str, ttl: int, casting, serializer=None):
         def wrapper(func):
             def inner_wrapper(*args, **kwargs):
                 if data := self.get(f'{identifier}::{args}::{kwargs}'):
                     return casting(data)
                 data = func(*args, **kwargs)
-                self.set(f'{identifier}::{args}::{kwargs}', data, ttl)
+                self.set(f'{identifier}::{args}::{kwargs}', data if not serializer else serializer(data), ttl)
                 return data
             return inner_wrapper
         return wrapper
