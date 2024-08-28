@@ -43,6 +43,7 @@ class Redis:
                 if data := self.get(f'{identifier}::{args}::{kwargs}'):
                     return casting(data)
                 data = func(*args, **kwargs)
+                if not data: return
                 self.set(f'{identifier}::{args}::{kwargs}', data if not serializer else serializer(data), ttl)
                 return data
             return inner_wrapper
