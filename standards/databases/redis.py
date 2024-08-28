@@ -27,7 +27,7 @@ class Redis:
 
     @classmethod
     def from_config(cls, config: RedisConfig):
-        return cls(host=config.host, port=config.port, db=config.db, pooled=True if config.pool else False, min_size=config.pool.min_size if config.pool else None, max_size=config.pool.max_size if config.pool else None)
+        return cls(host=config.host, port=config.port, db=config.database, pooled=True if config.pool else False, min_size=config.pool.min_size if config.pool else None, max_size=config.pool.max_size if config.pool else None)
 
     def get(self, key):
         return self.connection.get(key)
