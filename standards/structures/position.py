@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 
 from pydantic import Field
 
@@ -13,6 +14,10 @@ class BatteryData(BaseObject):
 
 class ExtraInfo(BaseObject):
     io_set: list[bool]
+
+class Ignition(Enum):
+    OFF = 0
+    ON = 1
 
 class PrimitivePosition(Primitive):
     latitude: float
@@ -36,4 +41,7 @@ class Position(BaseObject):
     received_at: datetime
     generated_at: datetime
     trackable: Trackable
+    distance: float|None
+    ignition: Ignition
+    speed: float|None
     battery: BatteryData = Field(default_factory=BatteryData)
