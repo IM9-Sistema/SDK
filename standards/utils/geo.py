@@ -1,17 +1,23 @@
 import requests
 from os import environ
+from random import choice
+import time
 
-
-def get_reverse_address(lat: float, lon: float) -> str:
+def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_wait: float = 0) -> str:
+    if not hosts:
+        hosts = environ.get('NOMINATIM_HOST', 'http://10.15.1.102:8080/').split(';')
+    host = choice(hosts)
     try:
-        request = requests.get(environ.get('NOMINATIM_HOST', 'http://10.15.1.102:8080/')+'/reverse', params={
+        request = requests.get(host+'/reverse', params={
             'lat': lat, 'lon': lon, 'format': 'jsonv2'
         })
     except:
-        return get_reverse_address(lat, lon)
+        time.sleep(retry_wait)
+        return get_reverse_address(lat, lon, hosts=hosts, retry_wait=retry_wait+1)
 
     if request.status_code == 500:
-        return get_reverse_address(lat, lon)
+        time.sleep(retry_wait)
+        return get_reverse_address(lat, lon, hosts=hosts, retry_wait=retry_wait+1.5)
 
     if request.status_code == 404:
         return environ.get('NOT_FOUND_ADDRESS', 'Endereço não encontrado')
