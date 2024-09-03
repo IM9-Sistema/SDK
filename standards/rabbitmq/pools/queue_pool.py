@@ -5,8 +5,8 @@ from pydantic import BaseModel
 from ..queue import Queue, RabbitMQPool
 
 class QueuePool(Queue):
-    def __init__(self, host, port, queue, max_size: int, min_size: int):
-        super().__init__(host, port, queue)
+    def __init__(self, host, port, queue, max_size: int, min_size: int, durable: bool):
+        super().__init__(host, port, queue, durable)
         self.max_size = max_size
         self.min_size = min_size
         self.connections: list[Queue] = []
@@ -17,7 +17,7 @@ class QueuePool(Queue):
 
     @classmethod
     def from_config(cls, config: RabbitMQPool):
-        return cls(config.host, config.port, config.queue, max_size=config.max_size, min_size=config.min_size)
+        return cls(config.host, config.port, config.queue, max_size=config.max_size, min_size=config.min_size, durable=config.durable)
 
     def select_conn(self):
         return choice(self.connections)

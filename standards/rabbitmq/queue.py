@@ -6,12 +6,13 @@ from pydantic import BaseModel
 from ..structures.generics import RabbitMQAddress, RabbitMQPool
 
 class Queue:
-    def __init__(self, host, port, queue):
+    def __init__(self, host, port, queue, durable):
         self.connection = None
         self.channel = None
         self.queue = None
         self.host = host
         self.port = port
+        self.durable = durable
         self.queue_name = queue
         self.connect()
 
@@ -19,11 +20,11 @@ class Queue:
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(self.host, self.port))
         self.channel = self.connection.channel()
         self.channel.basic_qos(prefetch_count=1)
-        self.queue = self.channel.queue_declare(queue=self.queue_name)
+        self.queue = self.channel.queue_declare(queue=self.queue_name, durable=self.durable)
 
     @classmethod
     def from_config(cls, config: RabbitMQAddress):
-        return cls(host=config.host, port=config.port, queue=config.queue)
+        return cls(host=config.host, port=config.port, queue=config.queue, durable=config.durable)
 
 
     def produce_message(self, message: BaseModel):

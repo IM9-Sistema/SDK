@@ -19,6 +19,7 @@ class GenericConnectionPool(BaseObject):
 
 class RabbitMQAddress(HostAddress):
     queue: str
+    durable: bool
 
 class RabbitMQPool(RabbitMQAddress):
     pool: GenericConnectionPool
