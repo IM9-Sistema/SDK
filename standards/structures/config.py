@@ -5,6 +5,10 @@ from ..utils import Singleton
 from .generics import HostAddress, GenericConnectionPool
 from .auth import PasswordUsername
 __config_version__ = 0
+
+# Placeholder
+class ConfigSection(BaseObject): pass
+
 class StandardConfig(BaseObject):
     _version: int
     
