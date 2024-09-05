@@ -7,3 +7,4 @@ from .config import StandardConfig, SingletonConfig, MSSQLConfig, RedisConfig, C
 from .auth import PasswordUsername
 from .vehicle import VehicleReference, Vehicle
 from .trackable import Trackable
+from .risk_area import RiskArea, RiskAreaReference

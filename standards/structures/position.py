@@ -2,7 +2,9 @@ from datetime import datetime
 from enum import Enum
 
 from pydantic import Field
+from shapely import Point
 
+from . import RiskArea
 from .trackable import Trackable
 from .base import BaseObject
 from .equipment import PrimitiveEquipment, Equipment, EquipmentEventType, VehicleState
@@ -45,3 +47,17 @@ class Position(BaseObject):
     ignition: Ignition
     speed: float|None
     battery: BatteryData = Field(default_factory=BatteryData)
+    risk_area: list[RiskArea]|None = Field(default=None)
+
+    @property
+    def point(self) -> Point:
+        return Point(self.latitude, self.longitude)
+
+    @property
+    def intersecting_risk_areas(self) -> list[RiskArea]:
+        intersecting_risk_areas = []
+        for risk_area in self.risk_areas:
+            if risk_area.polygon.contains(self.point):
+                intersecting_risk_areas.append(risk_area)
+        return intersecting_risk_areas
+
