@@ -21,8 +21,17 @@ class Equipment(BaseObject):
     uin: str
     technology: Technology
 
+class EquipmentEvent(Enum):
+    PANIC = auto()
+    PARKING_LOCK = auto()
+    MAIN_POWER_CUT = auto()
+    ANTI_THEFT = auto()
+    ANTI_THEFT_DOOR = auto()
+    MOTION = auto()
+    ANTI_THEFT_SHOCK = auto()
+    GENERIC_INPUT = auto()
 
-class EquipmentEventType(Enum):
+class PrimitiveEquipmentEventType(Enum):
     SUNTECH_PANIC_BUTTON = 101
     SUNTECH_PARKING_LOCK = 102
     SUNTECH_MAIN_POWER_CUT = 103
@@ -34,7 +43,6 @@ class EquipmentEventType(Enum):
     SUNTECH_INPUT_1_OPEN = 112
     SUNTECH_INPUT_2_GROUNDED = 113
     SUNTECH_INPUT_2_OPEN = 114
-    REGULAR_POSITION = 200
 
 class VehicleState(Enum):
     ON = auto()

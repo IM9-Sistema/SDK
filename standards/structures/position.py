@@ -5,10 +5,11 @@ from pydantic import Field
 from shapely import Point
 
 from . import RiskArea
-from .trackable import Trackable
 from .base import BaseObject
-from .equipment import PrimitiveEquipment, Equipment, EquipmentEventType, VehicleState
+from .equipment import PrimitiveEquipment, VehicleState
 from .generics import Primitive
+from .trackable import Trackable
+
 
 class BatteryData(BaseObject):
     internal_wattage: float|None
@@ -33,7 +34,6 @@ class PrimitivePosition(Primitive):
     is_stale: bool
     extras: ExtraInfo|None
     state: VehicleState
-    event: EquipmentEventType | None
 
 
 class Position(BaseObject):
@@ -48,7 +48,6 @@ class Position(BaseObject):
     speed: float|None
     battery: BatteryData = Field(default_factory=BatteryData)
     risk_area: list[RiskArea]|None = Field(default=None)
-
     @property
     def point(self) -> Point:
         return Point(self.latitude, self.longitude)

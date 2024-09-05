@@ -1,6 +1,6 @@
 from .base import BaseObject
-from .equipment import Equipment, EquipmentEventType, EquipmentReference, PrimitiveEquipment, PrimitiveEquipmentReference, VehicleState, Technology
-from .event import Event, EventType, Issuer
+from .equipment import Equipment, PrimitiveEquipmentEventType, EquipmentReference, PrimitiveEquipment, PrimitiveEquipmentReference, VehicleState, Technology
+from .event import Event, EventType, Issuer, EventMetadata
 from .risk_area import RiskArea, RiskAreaReference
 from .position import Position, PrimitivePosition, BatteryData, ExtraInfo, Ignition
 from .generics import GenericReference, Primitive, IDReference, HostAddress, RabbitMQAddress, RabbitMQPool
