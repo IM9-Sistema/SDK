@@ -14,14 +14,18 @@ class RiskAreaReference(GenericReference):
 class RiskArea(BaseObject):
     id: int
     name: str
-    polygon: Polygon
+    points: list[[float, float]]
 
     @classmethod
     def from_geojson(cls, id: int, name: str, geojson: dict):
+        polygon: Polygon
         if not isinstance(polygon := shape_from_geojson(geojson), Polygon):
             raise ShapeException(f'Expecting Polygon got {type(polygon)}')
-        return cls(id=id, name=name, polygon=polygon)
+        x, y = polygon.coords.xy
+        points = [[a, b] for a,b in zip(x,y)]
 
-    @field_serializer('polygon')
-    def serialize_dt(self, polygon: Polygon, _info):
-        return to_geojson(polygon)
+        return cls(id=id, name=name, points=points)
+
+    @property
+    def polygon(self) -> Polygon:
+        return Polygon(self.points)
