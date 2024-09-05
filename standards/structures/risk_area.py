@@ -14,7 +14,7 @@ class RiskAreaReference(GenericReference):
 class RiskArea(BaseObject):
     id: int
     name: str
-    points: list[[float, float]]
+    points: list[list[float, float]]
 
     @classmethod
     def from_geojson(cls, id: int, name: str, geojson: dict):
