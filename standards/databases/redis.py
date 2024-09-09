@@ -1,4 +1,5 @@
 from json import loads
+from xml.sax.saxutils import escape
 
 import redis
 from pydantic import BaseModel
@@ -30,12 +31,18 @@ class Redis:
         return cls(host=config.host, port=config.port, db=config.database, pooled=True if config.pool else False, min_size=config.pool.min_size if config.pool else None, max_size=config.pool.max_size if config.pool else None)
 
     def get(self, key):
-        return self.connection.get(key)
+        try:
+            return self.connection.get(key)
+        except redis.exceptions.ConnectionError:
+            return self.get(key=key)
 
     def set(self, key, value, ttl: int = None):
         if isinstance(value, BaseModel):
             value = value.model_dump_json().encode('utf-8')
-        self.connection.set(key, value, ex=ttl)
+        try:
+            self.connection.set(key, value, ex=ttl)
+        except redis.exceptions.ConnectionError:
+            return self.set(key=key, value=value, ttl=ttl)
 
     def memo(self, identifier: str, ttl: int, casting, serializer=None):
         def wrapper(func):
