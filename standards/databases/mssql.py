@@ -39,6 +39,13 @@ class MSSQL:
     def get_cursor(self):
         return self.connection.cursor()
 
+    def query(self, sql, *data):
+        cursor: pyodbc.Cursor = self.get_cursor()
+        cursor.execute(sql, data)
+        cursor.commit()
+        cursor.close()
+
+
     def stream_select(self, sql: str, *data: tuple[Any]) -> Generator[dict[str, Any], None, None]:
         cursor: pyodbc.Cursor = self.get_cursor()
         cursor.execute(sql, data)
