@@ -48,6 +48,9 @@ class Position(BaseObject):
     speed: float|None
     battery: BatteryData = Field(default_factory=BatteryData)
     risk_area: list[RiskArea]|None = Field(default=None)
+    state: VehicleState
+
+
     @property
     def point(self) -> Point:
         return Point(self.latitude, self.longitude)
