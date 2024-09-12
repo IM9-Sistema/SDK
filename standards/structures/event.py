@@ -1,5 +1,3 @@
-from typing import Any
-
 from pydantic import Field
 
 from .base import BaseObject
@@ -11,15 +9,16 @@ class EventType(Enum):
     EQUIPMENT_EVENT = auto() # Not implemented
     POSITION_WITH_EVENT = auto()
 
-class Issuer(BaseObject):
-    name: str
+class MetadataType(Enum):
+    POSITION_WITH_NO_TRACKABLE = auto()
+    AGGREGATED_EVENT = auto()
+    ISSUER = auto()
 
 class EventMetadata(BaseObject):
-    type: EventType
-    extras: Any
+    type: MetadataType
+    data: str|dict|BaseObject|None = Field(default=None)
 
 class Event[T](BaseObject):
     type: EventType
-    issuer: Issuer
     data: T
     metadata: list[EventMetadata] = Field(default_factory=list)
