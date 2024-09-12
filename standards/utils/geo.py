@@ -1,7 +1,11 @@
+import logging
+
 import requests
 from os import environ
 from random import choice
 import time
+
+logger = logging.getLogger(__name__)
 
 def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_wait: float = 0) -> str:
     if not hosts:
@@ -23,4 +27,5 @@ def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_w
         return environ.get('NOT_FOUND_ADDRESS', 'Endereço não encontrado')
 
     data = request.json()
+    logger.debug(f'Got response from {host}: {data}')
     return data['display_name']
