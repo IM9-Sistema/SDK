@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from ..structures import RedisConfig
 
 class Redis:
-    def __init__(self, host='localhost', port=6379, db=0, pooled: bool = None, min_size: int = None, max_size: int = None):
+    def __init__(self, host, port, db, pooled: bool = None, min_size: int = None, max_size: int = None):
         self._pool = None
         self._connection = None
         self.host = host
