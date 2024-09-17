@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum, auto, StrEnum
 from .base import BaseObject
 from ..utils import reference_link
 from .generics import IDReference, Primitive
@@ -21,15 +21,15 @@ class Equipment(BaseObject):
     uin: str
     technology: Technology
 
-class EquipmentEvent(Enum):
-    PANIC = auto()
-    PARKING_LOCK = auto()
-    MAIN_POWER_CUT = auto()
-    ANTI_THEFT = auto()
-    ANTI_THEFT_DOOR = auto()
-    MOTION = auto()
-    ANTI_THEFT_SHOCK = auto()
-    GENERIC_INPUT = auto()
+class EquipmentEvent(StrEnum):
+    PANIC = "PANIC"
+    PARKING_LOCK = "PARKING_LOCK"
+    MAIN_POWER_CUT = "MAIN_POWER_CUT"
+    ANTI_THEFT = "ANTI_THEFT"
+    ANTI_THEFT_DOOR = "ANTI_THEFT_DOOR"
+    MOTION = "MOTION"
+    ANTI_THEFT_SHOCK = "ANTI_THEFT_SHOCK"
+    GENERIC_INPUT = "GENERIC_INPUT"
 
 class PrimitiveEquipmentEventType(Enum):
     SUNTECH_PANIC_BUTTON = 101
