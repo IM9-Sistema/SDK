@@ -28,4 +28,7 @@ def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_w
 
     data = request.json()
     logger.debug(f'Got response from {host}: {data}')
-    return data['display_name']
+    output = data['display_name']\
+                .replace(f', {data['address']['municipality']}', '') \
+                .replace(f', {data['address']['state_district']}', '')
+    return output
