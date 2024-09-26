@@ -43,7 +43,7 @@ class Queue:
 
     def consume_messages(self):
         def wrapper(function: Callable[[pika.channel.Channel, pika.spec.Basic.Deliver, pika.spec.BasicProperties, bytes], None]) -> None:
-            self.channel.basic_qos(prefetch_count=1)
+            self.channel.basic_qos(prefetch_count=16)
             self.channel.basic_consume(queue=self.queue_name,
                                 auto_ack=False,
                                 on_message_callback=function)
