@@ -1,4 +1,5 @@
 import logging
+import re
 
 import requests
 from os import environ
@@ -6,8 +7,10 @@ from random import choice
 import time
 
 logger = logging.getLogger(__name__)
+regex = re.compile(r',[^,]*?\bRegião\b[^,]*?,')
 
-def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_wait: float = 0) -> str:
+def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_wait: float = None) -> str:
+    retry_wait = retry_wait or 0.1
     if not hosts:
         hosts = environ.get('NOMINATIM_HOST', 'http://10.15.1.102:8080/').split(';')
     host = choice(hosts)
@@ -38,5 +41,5 @@ def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_w
 
     if 'state_district' in data['address']:
         output = output.replace(f', {data['address']['state_district']}', '')
-
+    output = regex.sub('', output)
     return output
