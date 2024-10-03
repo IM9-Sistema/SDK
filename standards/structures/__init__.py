@@ -1,5 +1,5 @@
 from .base import BaseObject
-from .equipment import Equipment, PrimitiveEquipmentEventType, EquipmentReference, PrimitiveEquipment, PrimitiveEquipmentReference, VehicleState, Technology
+from .equipment import Equipment, PrimitiveEquipmentEventType, EquipmentReference, PrimitiveEquipment, PrimitiveEquipmentReference, VehicleState, Technology, EquipmentEventType
 from .event import Event, EventType, EventMetadata, MetadataType
 from .risk_area import RiskArea, RiskAreaReference
 from .position import Position, PrimitivePosition, BatteryData, ExtraInfo, Ignition
