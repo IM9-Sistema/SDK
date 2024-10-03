@@ -30,6 +30,7 @@ class EquipmentEventType(StrEnum):
     MOTION = "MOTION"
     ANTI_THEFT_SHOCK = "ANTI_THEFT_SHOCK"
     GENERIC_INPUT = "GENERIC_INPUT"
+    JAMMER = "JAMMER"
 
 class PrimitiveEquipmentEventType(Enum):
     SUNTECH_PANIC_BUTTON = 101
