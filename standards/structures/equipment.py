@@ -21,7 +21,7 @@ class Equipment(BaseObject):
     uin: str
     technology: Technology
 
-class EquipmentEvent(StrEnum):
+class EquipmentEventType(StrEnum):
     PANIC = "PANIC"
     PARKING_LOCK = "PARKING_LOCK"
     MAIN_POWER_CUT = "MAIN_POWER_CUT"

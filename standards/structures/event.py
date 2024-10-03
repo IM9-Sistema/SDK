@@ -13,6 +13,7 @@ class MetadataType(StrEnum):
     POSITION_WITH_NO_TRACKABLE = "POSITION_WITH_NO_TRACKABLE"
     AGGREGATED_EVENT = "AGGREGATED_EVENT"
     ISSUER = "ISSUER"
+    EQUIPMENT_EVENT = "EQUIPMENT_EVENT"
 
 class EventMetadata(BaseObject):
     type: MetadataType
