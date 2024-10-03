@@ -20,10 +20,12 @@ def get_reverse_address(lat: float, lon: float, hosts: list[str] = None, retry_w
         })
     except:
         time.sleep(retry_wait)
+        logger.warning(f"Failed to get response from {host}")
         return get_reverse_address(lat, lon, hosts=hosts, retry_wait=retry_wait+1)
 
     if request.status_code == 500:
         time.sleep(retry_wait)
+        logger.warning(f"Got 500 from {host}")
         return get_reverse_address(lat, lon, hosts=hosts, retry_wait=retry_wait+1.5)
 
     if request.status_code == 404:

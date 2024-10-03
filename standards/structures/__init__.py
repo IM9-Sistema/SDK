@@ -8,3 +8,5 @@ from .config import StandardConfig, SingletonConfig, MSSQLConfig, RedisConfig, C
 from .auth import PasswordUsername
 from .vehicle import VehicleReference, Vehicle
 from .trackable import Trackable
+from .user import User
+from .alerts import Alert, AlertType
