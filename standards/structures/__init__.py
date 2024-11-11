@@ -10,3 +10,4 @@ from .vehicle import VehicleReference, Vehicle
 from .trackable import Trackable
 from .user import User
 from .alerts import Alert, AlertType
+from .anchor import Anchor

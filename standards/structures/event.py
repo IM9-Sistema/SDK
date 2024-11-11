@@ -15,6 +15,7 @@ class MetadataType(StrEnum):
     AGGREGATED_EVENT = "AGGREGATED_EVENT"
     ISSUER = "ISSUER"
     EQUIPMENT_EVENT = "EQUIPMENT_EVENT"
+    ANCHOR = "ANCHOR"
 
 class EventMetadata(BaseObject):
     type: MetadataType
