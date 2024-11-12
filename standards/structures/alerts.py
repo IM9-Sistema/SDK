@@ -7,6 +7,8 @@ from .user import User
 
 class AlertType(StrEnum):
     MAIN_POWER_CUT = "MAIN_POWER_CUT"
+    ANCHOR = "ANCHOR"
+    PROHIBITED_TIME = "PROHIBITED_TIME"
 
 
 class Alert(BaseObject):
