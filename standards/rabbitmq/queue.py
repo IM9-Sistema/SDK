@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from ..structures.generics import RabbitMQAddress, RabbitMQPool
 
 class Queue:
-    def __init__(self, host, port, queue, durable):
+    def __init__(self, host, port, queue, durable, stream=None, max_size=None, ttl=None):
         self.connection = None
         self.channel = None
         self.queue = None
@@ -14,17 +14,24 @@ class Queue:
         self.port = port
         self.durable = durable
         self.queue_name = queue
+        self.stream = stream
+        self.max_size = max_size
+        self.ttl = ttl
         self.connect()
+
+    @property
+    def queue_arguments(self) -> dict[str, str]:
+        return {} | ({ 'x-queue-type': 'stream' } if self.stream else {}) | ({ 'x-max-length-bytes': self.max_size } if self.max_size else {}) | ({ 'x-max-age': self.ttl } if self.ttl else {})
 
     def connect(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(self.host, self.port))
         self.channel = self.connection.channel()
         self.channel.basic_qos(prefetch_count=1)
-        self.queue = self.channel.queue_declare(queue=self.queue_name, durable=self.durable)
+        self.queue = self.channel.queue_declare(queue=self.queue_name, durable=self.durable, arguments=self.queue_arguments)
 
     @classmethod
     def from_config(cls, config: RabbitMQAddress):
-        return cls(host=config.host, port=config.port, queue=config.queue, durable=config.durable)
+        return cls(host=config.host, port=config.port, queue=config.queue, durable=config.durable, stream=config.stream, max_size=config.max_size)
 
 
     def produce_message(self, message: BaseModel):
